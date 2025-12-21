@@ -33,14 +33,21 @@ class RegisteredUserController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
-            'rolename' => ['required', 'string', 'max:20'],
         ]);
+
+        // Auto-assign role based on email domain
+        $email = $request->email;
+        $rolename = 'patient'; // default role
+        
+        if (str_ends_with($email, '@mbo-utrecht.nl')) {
+            $rolename = 'praktijkmanagement';
+        }
 
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
-            'rolename' => $request->rolename,
+            'rolename' => $rolename,
         ]);
 
         event(new Registered($user));

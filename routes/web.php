@@ -32,6 +32,26 @@ Route::get('/praktijkmanagement', [PraktijkmanagementController::class, 'index']
     ->name('praktijkmanagement.index')
     ->middleware(['auth', 'role:praktijkmanagement']);
 
+Route::get('/praktijkmanagement/userroles', [PraktijkmanagementController::class, 'userroles'])
+    ->name('praktijkmanagement.userroles')
+    ->middleware(['auth', 'role:praktijkmanagement']);
+
+Route::get('/praktijkmanagement/{id}/edit', [PraktijkmanagementController::class, 'edit'])
+    ->name('praktijkmanagement.edit')
+    ->middleware(['auth', 'role:praktijkmanagement']);
+
+Route::get('/praktijkmanagement/{id}', [PraktijkmanagementController::class, 'show'])
+    ->name('praktijkmanagement.show')
+    ->middleware(['auth', 'role:praktijkmanagement']);
+
+Route::put('/praktijkmanagement/{id}', [PraktijkmanagementController::class, 'update'])
+    ->name('praktijkmanagement.update')
+    ->middleware(['auth', 'role:praktijkmanagement']);
+
+Route::delete('/praktijkmanagement/{id}', [PraktijkmanagementController::class, 'destroy'])
+    ->name('praktijkmanagement.destroy')
+    ->middleware(['auth', 'role:praktijkmanagement']);
+
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');

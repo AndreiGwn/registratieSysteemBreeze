@@ -12,6 +12,18 @@
                     {{ __("You're logged in!") }}
                 </div>
             </div>
+
+            @if(auth()->check() && auth()->user()->rolename === 'praktijkmanagement')
+            <!-- Gebruikersrollen Beheer Link -->
+            <div class="mt-6 bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                <div class="p-6">
+                    <h3 class="text-lg font-semibold text-gray-900 mb-4">Gebruikersbeheer</h3>
+                    <a href="{{ route('praktijkmanagement.userroles') }}" class="btn btn-primary">
+                        Verander Roles of Verwijderen
+                    </a>
+                </div>
+            </div>
+            @endif
         </div>
     </div>
 </x-app-layout>
