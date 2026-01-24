@@ -1,0 +1,175 @@
+<mxfile host="app.diagrams.net" modified="2026-01-24T20:45:00.000Z" agent="draw.io" version="22.1.16" etag="class-diagram-leverancier">
+  <diagram name="Class Diagram - Leveranciers Management" id="c4acf3e9-155e-7222-9cf6-157b1a14988f">
+    <mxGraphModel dx="1422" dy="794" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" background="none" math="0" shadow="0">
+      <root>
+        <mxCell id="0"/>
+        <mxCell id="1" parent="0"/>
+        
+        <!-- LeverancierController -->
+        <mxCell id="controller" value="&lt;&lt;Controller&gt;&gt;&#xa;LeverancierController" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=40;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="50" y="50" width="240" height="140" as="geometry"/>
+        </mxCell>
+        <mxCell id="controller-methods" value="+ index(Request) : View&#xa;+ show(int id) : View&#xa;+ edit(int id) : View&#xa;+ update(Request, int id) : RedirectResponse" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="controller">
+          <mxGeometry y="40" width="240" height="100" as="geometry"/>
+        </mxCell>
+        
+        <!-- Leverancier Model -->
+        <mxCell id="leverancier" value="&lt;&lt;Model&gt;&gt;&#xa;Leverancier" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=40;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+          <mxGeometry x="380" y="50" width="260" height="290" as="geometry"/>
+        </mxCell>
+        <mxCell id="leverancier-attrs" value="+ Id : int&#xa;+ Naam : string&#xa;+ ContactPersoon : string&#xa;+ LeverancierNummer : string&#xa;+ Mobiel : string&#xa;+ ContactId : int&#xa;+ IsActief : bit&#xa;+ Opmerking : string&#xa;+ DatumAangemaakt : DateTime&#xa;+ DatumGewijzigd : DateTime" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="leverancier">
+          <mxGeometry y="40" width="260" height="160" as="geometry"/>
+        </mxCell>
+        <mxCell id="leverancier-line" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;strokeColor=inherit;" vertex="1" parent="leverancier">
+          <mxGeometry y="200" width="260" height="8" as="geometry"/>
+        </mxCell>
+        <mxCell id="leverancier-methods" value="+ contact() : BelongsTo&#xa;+ producten() : BelongsToMany" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="leverancier">
+          <mxGeometry y="208" width="260" height="82" as="geometry"/>
+        </mxCell>
+        
+        <!-- Contact Model -->
+        <mxCell id="contact" value="&lt;&lt;Model&gt;&gt;&#xa;Contact" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=40;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+          <mxGeometry x="720" y="50" width="250" height="250" as="geometry"/>
+        </mxCell>
+        <mxCell id="contact-attrs" value="+ Id : int&#xa;+ Straat : string&#xa;+ Huisnummer : string&#xa;+ Postcode : string&#xa;+ Stad : string&#xa;+ IsActief : bit&#xa;+ Opmerking : string&#xa;+ DatumAangemaakt : DateTime&#xa;+ DatumGewijzigd : DateTime" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="contact">
+          <mxGeometry y="40" width="250" height="145" as="geometry"/>
+        </mxCell>
+        <mxCell id="contact-line" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;strokeColor=inherit;" vertex="1" parent="contact">
+          <mxGeometry y="185" width="250" height="8" as="geometry"/>
+        </mxCell>
+        <mxCell id="contact-methods" value="+ leverancier() : HasOne" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="contact">
+          <mxGeometry y="193" width="250" height="57" as="geometry"/>
+        </mxCell>
+        
+        <!-- Product Model -->
+        <mxCell id="product" value="&lt;&lt;Model&gt;&gt;&#xa;Product" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=40;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+          <mxGeometry x="380" y="400" width="260" height="240" as="geometry"/>
+        </mxCell>
+        <mxCell id="product-attrs" value="+ Id : int&#xa;+ Naam : string&#xa;+ Barcode : string&#xa;+ IsActief : bit&#xa;+ Opmerking : string&#xa;+ DatumAangemaakt : DateTime&#xa;+ DatumGewijzigd : DateTime" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="product">
+          <mxGeometry y="40" width="260" height="115" as="geometry"/>
+        </mxCell>
+        <mxCell id="product-line" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;strokeColor=inherit;" vertex="1" parent="product">
+          <mxGeometry y="155" width="260" height="8" as="geometry"/>
+        </mxCell>
+        <mxCell id="product-methods" value="+ leveranciers() : BelongsToMany&#xa;+ allergenen() : BelongsToMany&#xa;+ magazijn() : HasOne" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="product">
+          <mxGeometry y="163" width="260" height="77" as="geometry"/>
+        </mxCell>
+        
+        <!-- Allergeen Model -->
+        <mxCell id="allergeen" value="&lt;&lt;Model&gt;&gt;&#xa;Allergeen" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=40;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+          <mxGeometry x="50" y="400" width="240" height="220" as="geometry"/>
+        </mxCell>
+        <mxCell id="allergeen-attrs" value="+ Id : int&#xa;+ Naam : string&#xa;+ Omschrijving : string&#xa;+ IsActief : bit&#xa;+ Opmerking : string&#xa;+ DatumAangemaakt : DateTime&#xa;+ DatumGewijzigd : DateTime" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="allergeen">
+          <mxGeometry y="40" width="240" height="115" as="geometry"/>
+        </mxCell>
+        <mxCell id="allergeen-line" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;strokeColor=inherit;" vertex="1" parent="allergeen">
+          <mxGeometry y="155" width="240" height="8" as="geometry"/>
+        </mxCell>
+        <mxCell id="allergeen-methods" value="+ producten() : BelongsToMany" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="allergeen">
+          <mxGeometry y="163" width="240" height="57" as="geometry"/>
+        </mxCell>
+        
+        <!-- Magazijn Model -->
+        <mxCell id="magazijn" value="&lt;&lt;Model&gt;&gt;&#xa;Magazijn" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=40;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+          <mxGeometry x="720" y="400" width="250" height="220" as="geometry"/>
+        </mxCell>
+        <mxCell id="magazijn-attrs" value="+ Id : int&#xa;+ ProductId : int&#xa;+ VerpakkingsEenheid : decimal(5,1)&#xa;+ AantalAanwezig : int&#xa;+ IsActief : bit&#xa;+ Opmerking : string&#xa;+ DatumAangemaakt : DateTime&#xa;+ DatumGewijzigd : DateTime" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="magazijn">
+          <mxGeometry y="40" width="250" height="130" as="geometry"/>
+        </mxCell>
+        <mxCell id="magazijn-line" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;strokeColor=inherit;" vertex="1" parent="magazijn">
+          <mxGeometry y="170" width="250" height="8" as="geometry"/>
+        </mxCell>
+        <mxCell id="magazijn-methods" value="+ product() : BelongsTo" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="magazijn">
+          <mxGeometry y="178" width="250" height="42" as="geometry"/>
+        </mxCell>
+        
+        <!-- Relationships -->
+        <!-- Controller -> Leverancier -->
+        <mxCell id="rel1" value="" style="endArrow=open;endFill=0;endSize=12;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;dashed=1;" edge="1" parent="1" source="controller-methods" target="leverancier-attrs">
+          <mxGeometry width="160" relative="1" as="geometry">
+            <mxPoint x="300" y="120" as="sourcePoint"/>
+            <mxPoint x="380" y="120" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="rel1-label" value="uses" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="rel1">
+          <mxGeometry x="-0.2" relative="1" as="geometry">
+            <mxPoint x="10" as="offset"/>
+          </mxGeometry>
+        </mxCell>
+        
+        <!-- Leverancier -> Contact (1:1) -->
+        <mxCell id="rel2" value="" style="endArrow=diamondThin;endFill=0;endSize=16;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="leverancier-attrs" target="contact-attrs">
+          <mxGeometry width="160" relative="1" as="geometry">
+            <mxPoint x="640" y="150" as="sourcePoint"/>
+            <mxPoint x="720" y="150" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="rel2-label" value="1" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="rel2">
+          <mxGeometry x="0.6" y="-1" relative="1" as="geometry">
+            <mxPoint x="-10" y="-11" as="offset"/>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="rel2-label2" value="1" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="rel2">
+          <mxGeometry x="-0.6" y="-1" relative="1" as="geometry">
+            <mxPoint x="-10" y="-11" as="offset"/>
+          </mxGeometry>
+        </mxCell>
+        
+        <!-- Leverancier -> Product (N:M) -->
+        <mxCell id="rel3" value="" style="endArrow=none;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="leverancier" target="product">
+          <mxGeometry width="160" relative="1" as="geometry">
+            <mxPoint x="510" y="340" as="sourcePoint"/>
+            <mxPoint x="510" y="400" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="rel3-label" value="N" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="rel3">
+          <mxGeometry x="0.6" y="-1" relative="1" as="geometry">
+            <mxPoint x="11" y="-10" as="offset"/>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="rel3-label2" value="M" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="rel3">
+          <mxGeometry x="-0.6" y="-1" relative="1" as="geometry">
+            <mxPoint x="11" y="10" as="offset"/>
+          </mxGeometry>
+        </mxCell>
+        
+        <!-- Product -> Allergeen (N:M) -->
+        <mxCell id="rel4" value="" style="endArrow=none;html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="product-attrs" target="allergeen-attrs">
+          <mxGeometry width="160" relative="1" as="geometry">
+            <mxPoint x="380" y="500" as="sourcePoint"/>
+            <mxPoint x="290" y="500" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="rel4-label" value="N" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="rel4">
+          <mxGeometry x="0.6" y="-1" relative="1" as="geometry">
+            <mxPoint x="10" y="-11" as="offset"/>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="rel4-label2" value="M" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="rel4">
+          <mxGeometry x="-0.6" y="-1" relative="1" as="geometry">
+            <mxPoint x="-10" y="-11" as="offset"/>
+          </mxGeometry>
+        </mxCell>
+        
+        <!-- Product -> Magazijn (1:1) -->
+        <mxCell id="rel5" value="" style="endArrow=diamondThin;endFill=0;endSize=16;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="product-attrs" target="magazijn-attrs">
+          <mxGeometry width="160" relative="1" as="geometry">
+            <mxPoint x="640" y="500" as="sourcePoint"/>
+            <mxPoint x="720" y="500" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="rel5-label" value="1" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="rel5">
+          <mxGeometry x="0.6" y="-1" relative="1" as="geometry">
+            <mxPoint x="-10" y="-11" as="offset"/>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="rel5-label2" value="1" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="rel5">
+          <mxGeometry x="-0.6" y="-1" relative="1" as="geometry">
+            <mxPoint x="-10" y="-11" as="offset"/>
+          </mxGeometry>
+        </mxCell>
+        
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
