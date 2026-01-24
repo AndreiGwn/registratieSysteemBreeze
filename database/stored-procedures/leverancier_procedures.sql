@@ -1,6 +1,10 @@
 -- =========================================
 -- Stored Procedures voor Leverancier Management
 -- Opdracht 3 - User Story 01
+-- Auteur: [Studentnaam]
+-- Datum: 24-01-2026
+-- Beschrijving: CRUD operaties voor leverancier beheer
+--               Inclusief pagination en scenario-based updates
 -- =========================================
 
 DELIMITER //
