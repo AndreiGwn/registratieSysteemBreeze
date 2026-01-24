@@ -113,16 +113,20 @@ class LeverancierController extends Controller
      */
     public function update(Request $request, $id)
     {
-        // Validate input
+        // Validate input with custom messages
         $validated = $request->validate([
             'naam' => 'required|string|max:100',
             'contactpersoon' => 'required|string|max:100',
             'leveranciernummer' => 'required|string|max:50',
-            'mobiel' => 'required|string|max:20',
+            'mobiel' => 'required|string|max:20|regex:/^06-[0-9]{8}$/',
             'straat' => 'required|string|max:100',
             'huisnummer' => 'required|string|max:10',
             'postcode' => 'required|string|max:10',
             'stad' => 'required|string|max:100',
+        ], [
+            'mobiel.regex' => 'Het mobiele nummer moet het formaat 06-12345678 hebben.',
+            'naam.required' => 'Naam is verplicht.',
+            'contactpersoon.required' => 'Contactpersoon is verplicht.',
         ]);
 
         try {
