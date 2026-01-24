@@ -6,6 +6,7 @@ use App\Http\Controllers\PatientController;
 use App\Http\Controllers\MondhygienistController;
 use App\Http\Controllers\AssistentController;
 use App\Http\Controllers\PraktijkmanagementController;
+use App\Http\Controllers\LeverancierController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -51,6 +52,23 @@ Route::put('/praktijkmanagement/{id}', [PraktijkmanagementController::class, 'up
 Route::delete('/praktijkmanagement/{id}', [PraktijkmanagementController::class, 'destroy'])
     ->name('praktijkmanagement.destroy')
     ->middleware(['auth', 'role:praktijkmanagement']);
+
+// Leverancier Routes - Manager Only
+Route::get('/leveranciers', [LeverancierController::class, 'index'])
+    ->name('leveranciers.index')
+    ->middleware(['auth', 'role:manager,praktijkmanagement']);
+
+Route::get('/leveranciers/{id}', [LeverancierController::class, 'show'])
+    ->name('leveranciers.show')
+    ->middleware(['auth', 'role:manager,praktijkmanagement']);
+
+Route::get('/leveranciers/{id}/edit', [LeverancierController::class, 'edit'])
+    ->name('leveranciers.edit')
+    ->middleware(['auth', 'role:manager,praktijkmanagement']);
+
+Route::put('/leveranciers/{id}', [LeverancierController::class, 'update'])
+    ->name('leveranciers.update')
+    ->middleware(['auth', 'role:manager,praktijkmanagement']);
 
 Route::get('/dashboard', function () {
     return view('dashboard');

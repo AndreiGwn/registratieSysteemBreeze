@@ -24,6 +24,18 @@
                 </div>
             </div>
             @endif
+
+            @if(auth()->check() && auth()->user()->rolename === 'manager')
+            <!-- Manager Menu -->
+            <div class="mt-6 bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                <div class="p-6">
+                    <h3 class="text-lg font-semibold text-gray-900 mb-4">Manager Menu</h3>
+                    <a href="{{ route('leveranciers.index') }}" class="inline-flex items-center px-4 py-2 bg-indigo-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-indigo-700">
+                        Wijzigen Leveranciers
+                    </a>
+                </div>
+            </div>
+            @endif
         </div>
     </div>
 </x-app-layout>
