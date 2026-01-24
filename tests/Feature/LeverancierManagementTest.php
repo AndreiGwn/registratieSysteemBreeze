@@ -12,6 +12,8 @@ class LeverancierManagementTest extends TestCase
 {
     use RefreshDatabase;
 
+    protected User $manager;
+
     protected function setUp(): void
     {
         parent::setUp();
