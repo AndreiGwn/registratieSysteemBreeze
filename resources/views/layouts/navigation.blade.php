@@ -22,6 +22,13 @@
                             {{ __('Patient') }}
                         </x-nav-link>
                     @endif
+
+                    @if (Auth::check() && Auth::user()->rolename === 'manager')
+                        <x-nav-link :href="route('leveranciers.index')"
+                            :active="request()->routeIs('leveranciers.*')">
+                            {{ __('Leveranciers') }}
+                        </x-nav-link>
+                    @endif
                 </div>
             </div>
 

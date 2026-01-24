@@ -4,6 +4,8 @@
 -- Datum: 24-01-2026
 -- =========================================
 
+USE breezedemo;
+
 -- Drop existing tables if they exist (in correct order due to foreign keys)
 DROP TABLE IF EXISTS ProductPerLeverancier;
 DROP TABLE IF EXISTS ProductPerAllergeen;

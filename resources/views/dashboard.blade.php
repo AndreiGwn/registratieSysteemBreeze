@@ -10,6 +10,11 @@
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900">
                     {{ __("You're logged in!") }}
+                    <br><br>
+                    <strong>DEBUG INFO:</strong><br>
+                    Email: {{ auth()->user()->email ?? 'Not logged in' }}<br>
+                    Role: "{{ auth()->user()->rolename ?? 'No role' }}"<br>
+                    Role length: {{ strlen(auth()->user()->rolename ?? '') }} characters
                 </div>
             </div>
 
