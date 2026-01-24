@@ -9,6 +9,14 @@ use Illuminate\Support\Facades\Log;
 class LeverancierController extends Controller
 {
     /**
+     * Create a new controller instance.
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
+    /**
      * Display a listing of leveranciers with pagination
      * Wireframe-02: Overzicht Leveranciers
      */
