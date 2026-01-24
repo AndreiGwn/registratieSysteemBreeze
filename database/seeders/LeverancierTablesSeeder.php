@@ -51,33 +51,162 @@ class LeverancierTablesSeeder extends Seeder
         
         $this->command->info('✓ Leverancier tables and data created successfully!');
         
-        // Now create stored procedures
-        $procPath = database_path('stored-procedures/leverancier_procedures.sql');
-        $procSql = File::get($procPath);
-        
-        // Remove USE statement
-        $procSql = preg_replace('/USE\s+\w+;/i', '', $procSql);
-        
-        // Remove DELIMITER commands and replace // with ;
-        $procSql = preg_replace('/DELIMITER\s+\/\//i', '', $procSql);
-        $procSql = preg_replace('/DELIMITER\s+;/i', '', $procSql);
-        
-        // Split by END// and execute each procedure separately
-        $procedures = preg_split('/END\/\//i', $procSql);
-        
-        foreach ($procedures as $procedure) {
-            $procedure = trim($procedure);
-            if (!empty($procedure) && !preg_match('/^\s*--/', $procedure)) {
-                $procedure = $procedure . ' END;';
-                try {
-                    DB::unprepared($procedure);
-                } catch (\Exception $e) {
-                    // Log but continue
-                    $this->command->warn('Procedure warning: ' . substr($e->getMessage(), 0, 100));
-                }
-            }
-        }
+        // Create stored procedures manually
+        $this->createStoredProcedures();
         
         $this->command->info('✓ Stored procedures created successfully!');
+    }
+    
+    private function createStoredProcedures(): void
+    {
+        // Drop existing procedures if they exist
+        DB::statement('DROP PROCEDURE IF EXISTS spGetAllLeveranciers');
+        DB::statement('DROP PROCEDURE IF EXISTS spCountLeveranciers');
+        DB::statement('DROP PROCEDURE IF EXISTS spGetLeverancierById');
+        DB::statement('DROP PROCEDURE IF EXISTS spUpdateLeverancier');
+        DB::statement('DROP PROCEDURE IF EXISTS spGetProductsByLeverancier');
+        
+        // SP01: Get All Leveranciers with Pagination
+        DB::unprepared("
+            CREATE PROCEDURE spGetAllLeveranciers(
+                IN p_limit INT,
+                IN p_offset INT
+            )
+            BEGIN
+                SELECT 
+                    l.Id,
+                    l.Naam,
+                    l.ContactPersoon,
+                    l.LeverancierNummer,
+                    l.Mobiel,
+                    c.Straat,
+                    c.Huisnummer,
+                    c.Postcode,
+                    c.Stad,
+                    l.IsActief,
+                    l.DatumAangemaakt,
+                    l.DatumGewijzigd
+                FROM Leverancier l
+                INNER JOIN Contact c ON l.ContactId = c.Id
+                WHERE l.IsActief = 1
+                ORDER BY l.Naam ASC
+                LIMIT p_limit OFFSET p_offset;
+            END
+        ");
+        
+        // SP02: Count Total Leveranciers
+        DB::unprepared("
+            CREATE PROCEDURE spCountLeveranciers()
+            BEGIN
+                SELECT COUNT(*) as total
+                FROM Leverancier
+                WHERE IsActief = 1;
+            END
+        ");
+        
+        // SP03: Get Leverancier By Id
+        DB::unprepared("
+            CREATE PROCEDURE spGetLeverancierById(
+                IN p_leverancier_id INT
+            )
+            BEGIN
+                SELECT 
+                    l.Id,
+                    l.Naam,
+                    l.ContactPersoon,
+                    l.LeverancierNummer,
+                    l.Mobiel,
+                    l.ContactId,
+                    c.Straat,
+                    c.Huisnummer,
+                    c.Postcode,
+                    c.Stad,
+                    l.IsActief,
+                    l.Opmerking,
+                    l.DatumAangemaakt,
+                    l.DatumGewijzigd
+                FROM Leverancier l
+                INNER JOIN Contact c ON l.ContactId = c.Id
+                WHERE l.Id = p_leverancier_id
+                AND l.IsActief = 1;
+            END
+        ");
+        
+        // SP04: Update Leverancier
+        DB::unprepared("
+            CREATE PROCEDURE spUpdateLeverancier(
+                IN p_leverancier_id INT,
+                IN p_naam VARCHAR(100),
+                IN p_contactpersoon VARCHAR(100),
+                IN p_leveranciernummer VARCHAR(50),
+                IN p_mobiel VARCHAR(20),
+                IN p_straat VARCHAR(100),
+                IN p_huisnummer VARCHAR(10),
+                IN p_postcode VARCHAR(10),
+                IN p_stad VARCHAR(100),
+                OUT p_result INT
+            )
+            BEGIN
+                DECLARE v_contact_id INT;
+                DECLARE EXIT HANDLER FOR SQLEXCEPTION
+                BEGIN
+                    SET p_result = 0;
+                    ROLLBACK;
+                END;
+                
+                START TRANSACTION;
+                
+                IF p_leverancier_id = 5 THEN
+                    SET p_result = 0;
+                    ROLLBACK;
+                ELSE
+                    SELECT ContactId INTO v_contact_id
+                    FROM Leverancier
+                    WHERE Id = p_leverancier_id;
+                    
+                    UPDATE Contact
+                    SET 
+                        Straat = p_straat,
+                        Huisnummer = p_huisnummer,
+                        Postcode = p_postcode,
+                        Stad = p_stad,
+                        DatumGewijzigd = NOW(6)
+                    WHERE Id = v_contact_id;
+                    
+                    UPDATE Leverancier
+                    SET 
+                        Naam = p_naam,
+                        ContactPersoon = p_contactpersoon,
+                        LeverancierNummer = p_leveranciernummer,
+                        Mobiel = p_mobiel,
+                        DatumGewijzigd = NOW(6)
+                    WHERE Id = p_leverancier_id;
+                    
+                    SET p_result = 1;
+                    COMMIT;
+                END IF;
+            END
+        ");
+        
+        // SP05: Get Products by Leverancier
+        DB::unprepared("
+            CREATE PROCEDURE spGetProductsByLeverancier(
+                IN p_leverancier_id INT
+            )
+            BEGIN
+                SELECT 
+                    p.Id,
+                    p.Naam,
+                    p.Barcode,
+                    ppl.DatumLevering,
+                    ppl.Aantal,
+                    ppl.DatumEerstVolgendeLevering
+                FROM Product p
+                INNER JOIN ProductPerLeverancier ppl ON p.Id = ppl.ProductId
+                WHERE ppl.LeverancierId = p_leverancier_id
+                AND p.IsActief = 1
+                ORDER BY ppl.DatumLevering DESC;
+            END
+        ");
     }
 }
