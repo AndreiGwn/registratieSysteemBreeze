@@ -1,0 +1,11 @@
+# .gitignore additions for Opdracht 3
+
+# Video files (grote bestanden)
+# Uncomment als je video's lokaal wilt houden maar niet wilt pushen
+# vids/*.mp4
+# vids/*.webm
+# vids/*.avi
+
+# Maar zorg dat de vids folder zelf wel wordt gepusht
+!vids/
+!vids/README.md
