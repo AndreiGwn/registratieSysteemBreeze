@@ -1,0 +1,13 @@
+USE breezedemo;
+
+DROP PROCEDURE IF EXISTS Sp_GetAllUserroles;
+
+DELIMITER $$
+
+CREATE PROCEDURE Sp_GetAllUserroles()
+BEGIN
+    SELECT DISTINCT(USRS.rolename)
+    FROM Users as USRS;
+END$$
+
+DELIMITER ;

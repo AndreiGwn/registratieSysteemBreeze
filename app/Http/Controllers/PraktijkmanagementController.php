@@ -3,9 +3,17 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\User;
 
 class PraktijkmanagementController extends Controller
 {
+    private $userModel;
+
+    public function __construct()
+    {
+        $this->userModel = new User();
+    }
+
     /**
      * Display a listing of the resource.
      */
@@ -13,6 +21,21 @@ class PraktijkmanagementController extends Controller
     {
         return view('Praktijkmanagement.index', [
             'title' => 'Praktijkmanagement Home'
+        ]);
+    }
+
+    public function userroles()
+    {
+        // Haalt alle gebruikers op
+        $users = $this->userModel->sp_GetAllUsers(auth()->user()->id);
+        
+        // Haalt alle gebruikersrollen op voor de select
+        $userroles = $this->userModel->sp_GetAllUserroles();
+
+        return view('Praktijkmanagement.userroles', [
+            'title' => 'Gebruikersrollen',
+            'users' => $users,
+            'userroles' => $userroles
         ]);
     }
 
@@ -37,7 +60,13 @@ class PraktijkmanagementController extends Controller
      */
     public function show(string $id)
     {
-        //
+        // Haalt de gebruiker op
+        $user = $this->userModel->sp_GetUserById($id);
+
+        return view('Praktijkmanagement.show', [
+            'title' => 'Gebruiker Details',
+            'user' => $user
+        ]);
     }
 
     /**
@@ -45,7 +74,17 @@ class PraktijkmanagementController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        // Haalt de gebruiker op die een wijziging krijgt.
+        $user = $this->userModel->sp_GetUserById($id);
+        
+        // Haalt alle gebruikersrollen op voor de select
+        $userroles = $this->userModel->sp_GetAllUserroles();
+
+        return view('Praktijkmanagement.edit', [
+            'title' => 'Wijzig de gebruikersrol',
+            'user' => $user,
+            'userroles' => $userroles
+        ]);
     }
 
     /**
@@ -53,14 +92,31 @@ class PraktijkmanagementController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $userModel = new User();
+        $userModel->sp_UpdateUser(
+            $id,
+            $request->input('name'),
+            $request->input('email'),
+            $request->input('rolename')
+        );
+
+        return redirect()->route('praktijkmanagement.userroles')
+            ->with('success', 'Gebruikersgegevens succesvol bijgewerkt!');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(string $userId)
     {
-        //
+        $result = $this->userModel->sp_DeleteUser($userId);
+
+        if ($result > 0) {
+            return redirect()->route('praktijkmanagement.userroles')
+                ->with('success', 'User is succesvol verwijdert');
+        }
+
+        return redirect()->route('praktijkmanagement.userroles')
+            ->with('error', 'User is niet verwijdert');
     }
 }
