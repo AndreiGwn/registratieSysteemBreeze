@@ -16,10 +16,15 @@
                         {{ __('Dashboard') }}
                     </x-nav-link>
 
-                    @if (Auth::check() && in_array(Auth::user()->rolename, ['patient', 'praktijkmanagement']))
-                        <x-nav-link :href="route('patient.index')"
-                            :active="request()->routeIs('patient.index')">
-                            {{ __('Patient') }}
+                    @if (Auth::check() && Auth::user()->rolename === 'praktijkmanagement')
+                        <x-nav-link :href="route('allergens.index')" :active="request()->routeIs('allergens.*')">
+                            {{ __('Overzicht Allergenen') }}
+                        </x-nav-link>
+                    @endif
+
+                    @if (Auth::check() && Auth::user()->rolename === 'praktijkmanagement')
+                        <x-nav-link :href="route('roles.index')" :active="request()->routeIs('roles.*')">
+                            {{ __('Rollen') }}
                         </x-nav-link>
                     @endif
                 </div>
