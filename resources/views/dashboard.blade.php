@@ -18,7 +18,7 @@
             <div class="mt-6 bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6">
                     <h3 class="text-lg font-semibold text-gray-900 mb-4">Gebruikersbeheer</h3>
-                    <a href="{{ route('praktijkmanagement.userroles') }}" class="btn btn-primary">
+                    <a href="{{ route('roles.index') }}" class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition">
                         Verander Roles of Verwijderen
                     </a>
                 </div>
